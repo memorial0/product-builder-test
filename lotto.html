@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LottoLabs - 최고의 행운 파트너</title>
+    <title>LottoLabs - 번호 생성기</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,12 +20,20 @@
         </div>
     </nav>
 
-    <section class="hero">
-        <h1>당신의 미래를 위한<br>데이터 기반 행운 솔루션</h1>
-        <p>LottoLabs는 혁신적인 알고리즘과 사용자 중심의 디자인으로 여러분의 일상에 작은 설렘을 더합니다.</p>
-        <a href="lotto.html" class="cta-button">무료 번호 생성하기</a>
-    </section>
+    <main>
+        <div class="content-container">
+            <header style="margin-bottom: 2rem; text-align: center;">
+                <h2 style="font-size: 2rem; margin: 0;">로또 번호 생성기</h2>
+                <p style="color: var(--text-secondary);">오늘의 행운을 점쳐보세요.</p>
+            </header>
+            <section class="lotto-section">
+                <lotto-ticket></lotto-ticket>
+                <button id="generate-button">새로운 번호 생성</button>
+            </section>
+        </div>
+    </main>
 
     <script src="theme.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>

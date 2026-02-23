@@ -63,35 +63,13 @@ class LottoTicket extends HTMLElement {
 
 customElements.define('lotto-ticket', LottoTicket);
 
-// Theme Switch Logic
-const themeToggle = document.getElementById('theme-toggle');
-const sunIcon = document.getElementById('sun-icon');
-const moonIcon = document.getElementById('moon-icon');
-
-function setTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-    
-    if (theme === 'dark') {
-        sunIcon.style.display = 'block';
-        moonIcon.style.display = 'none';
-    } else {
-        sunIcon.style.display = 'none';
-        moonIcon.style.display = 'block';
-    }
-}
-
-// Check saved theme
-const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-setTheme(savedTheme);
-
-themeToggle.addEventListener('click', () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
-});
-
 // Generate Button Logic
-document.getElementById('generate-button').addEventListener('click', () => {
-    const ticket = document.querySelector('lotto-ticket');
-    ticket.regenerate();
-});
+const generateBtn = document.getElementById('generate-button');
+if (generateBtn) {
+    generateBtn.addEventListener('click', () => {
+        const ticket = document.querySelector('lotto-ticket');
+        if (ticket) {
+            ticket.regenerate();
+        }
+    });
+}
