@@ -1,56 +1,116 @@
 :root {
-    --primary-color: #4a90e2;
-    --background-color: #f0f2f5;
-    --text-color: #333;
-    --white: #fff;
-    --border-radius: 10px;
-    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Light Mode Variables */
+    --bg-color: #f8f9fa;
+    --container-bg: #ffffff;
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --accent-color: #4a90e2;
+    --accent-hover: #357abd;
+    --border-color: #dee2e6;
+    --shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+    --ball-bg: #e9ecef;
+    --ball-text: #212529;
+    --transition-speed: 0.3s;
+}
+
+[data-theme="dark"] {
+    /* Dark Mode Variables */
+    --bg-color: #121212;
+    --container-bg: #1e1e1e;
+    --text-primary: #e9ecef;
+    --text-secondary: #adb5bd;
+    --accent-color: #64b5f6;
+    --accent-hover: #90caf9;
+    --border-color: #333333;
+    --shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    --ball-bg: #2d2d2d;
+    --ball-text: #e9ecef;
+}
+
+* {
+    box-sizing: border-box;
+    transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed), box-shadow var(--transition-speed);
 }
 
 body {
-    font-family: 'Helvetica Neue', sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    min-height: 100vh;
     margin: 0;
     padding: 20px;
 }
 
 header {
-    margin-bottom: 20px;
+    text-align: center;
+    margin-bottom: 2rem;
 }
 
 h1 {
-    color: var(--primary-color);
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0;
+    background: linear-gradient(135deg, var(--accent-color), #bc4e9c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 main {
+    width: 100%;
+    max-width: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 #generate-button {
-    background-color: var(--primary-color);
-    color: var(--white);
+    width: 100%;
+    background-color: var(--accent-color);
+    color: white;
     border: none;
-    padding: 15px 30px;
-    font-size: 1.2em;
-    border-radius: var(--border-radius);
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 12px;
     cursor: pointer;
-    box-shadow: var(--box-shadow);
-    transition: background-color 0.3s ease;
-    margin-top: 20px;
+    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+    margin-top: 1.5rem;
 }
 
 #generate-button:hover {
-    background-color: #357abd;
+    background-color: var(--accent-hover);
+    transform: translateY(-2px);
 }
 
-lotto-ticket {
-    display: block;
-    margin-bottom: 20px;
+#generate-button:active {
+    transform: translateY(0);
+}
+
+/* Theme Toggle Button */
+.theme-switch {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--container-bg);
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    z-index: 1000;
+}
+
+.theme-switch svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--text-primary);
 }

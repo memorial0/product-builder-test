@@ -3,17 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로또 번호 생성기</title>
+    <title>Premium Lotto Generator</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <button class="theme-switch" id="theme-toggle" aria-label="Toggle dark mode">
+        <!-- Sun icon -->
+        <svg id="sun-icon" viewBox="0 0 24 24" style="display: none;">
+            <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>
+        </svg>
+        <!-- Moon icon -->
+        <svg id="moon-icon" viewBox="0 0 24 24">
+            <path d="M12.12 22a9.59 9.59 0 009.61-9.62 1 1 0 00-1.27-1 7.66 7.66 0 01-5.25.15c-3.16-1.15-5.43-4-5.73-7.29a7.66 7.66 0 01.74-4.55 1 1 0 00-1.11-1.43A9.66 9.66 0 002 8.16a9.84 9.84 0 009.89 13.84z"/>
+        </svg>
+    </button>
+
     <header>
-        <h1>로또 번호 생성기</h1>
+        <h1>로또 생성기</h1>
     </header>
+
     <main>
         <lotto-ticket></lotto-ticket>
-        <button id="generate-button">새 번호 생성</button>
+        <button id="generate-button">새로운 행운 생성</button>
     </main>
+
     <script src="main.js"></script>
 </body>
 </html>

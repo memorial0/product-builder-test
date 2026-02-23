@@ -18,30 +18,35 @@ class LottoTicket extends HTMLElement {
         this.shadowRoot.innerHTML = `
             <style>
                 .ticket {
-                    background-color: var(--white, #fff);
-                    padding: 20px;
-                    border-radius: var(--border-radius, 10px);
-                    box-shadow: var(--box-shadow, 0 4px 6px rgba(0, 0, 0, 0.1));
+                    background-color: var(--container-bg);
+                    padding: 2rem;
+                    border-radius: 20px;
+                    box-shadow: var(--shadow);
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     flex-wrap: wrap;
-                    gap: 10px;
-                    width: 300px;
-                    border-top: 5px solid var(--primary-color, #4a90e2);
+                    gap: 15px;
+                    width: 100%;
+                    border: 1px solid var(--border-color);
+                    transition: all var(--transition-speed);
                 }
                 .number {
-                    background-color: #f0f2f5;
-                    border: 1px solid #ddd;
+                    background-color: var(--ball-bg);
+                    color: var(--ball-text);
                     border-radius: 50%;
-                    width: 40px;
-                    height: 40px;
+                    width: 45px;
+                    height: 45px;
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    font-size: 1.2em;
-                    font-weight: bold;
-                    color: var(--text-color, #333);
+                    font-size: 1.1rem;
+                    font-weight: 700;
+                    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+                    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                }
+                .number:hover {
+                    transform: scale(1.1) translateY(-5px);
                 }
             </style>
             <div class="ticket">
@@ -58,6 +63,35 @@ class LottoTicket extends HTMLElement {
 
 customElements.define('lotto-ticket', LottoTicket);
 
+// Theme Switch Logic
+const themeToggle = document.getElementById('theme-toggle');
+const sunIcon = document.getElementById('sun-icon');
+const moonIcon = document.getElementById('moon-icon');
+
+function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    
+    if (theme === 'dark') {
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+    } else {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+    }
+}
+
+// Check saved theme
+const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+setTheme(savedTheme);
+
+themeToggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+});
+
+// Generate Button Logic
 document.getElementById('generate-button').addEventListener('click', () => {
-    document.querySelector('lotto-ticket').regenerate();
+    const ticket = document.querySelector('lotto-ticket');
+    ticket.regenerate();
 });
