@@ -3,124 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>하루 인사이트 - 생산성과 커리어를 위한 매일의 리서치</title>
-    <meta name="description" content="AI 도구 활용, 커리어 성장, 생산성 향상을 위한 독창적이고 심도 있는 인사이트를 제공합니다.">
+    <title>월급 인사이트 - 연봉 실수령액 계산기</title>
+    <meta name="description" content="연봉 실수령액을 즉시 계산하고 스마트한 재무 가이드를 확인하세요.">
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="canonical" href="https://example.com/index.html">
+    <script src="assets/js/main.js" defer></script>
 </head>
 <body>
-    <nav>
-        <div class="nav-inner">
-            <a href="index.html" class="logo">하루 인사이트</a>
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="blog/index.html">Blog</a>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
-                <button id="theme-toggle" class="theme-toggle">🌙</button>
-            </div>
-        </div>
-    </nav>
-
-    <header class="hero">
+    <header class="navbar">
         <div class="container">
-            <h1>지식의 깊이를 더하는 하루</h1>
-            <p>더 똑똑하게 일하고, 더 빠르게 성장하기 위한 실전 가이드</p>
-            <div class="ad-container">
-                <div class="ad-placeholder">광고 영역 (상단)</div>
-            </div>
+            <a href="index.html" class="logo">월급 인사이트</a>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="calculator.html">계산기</a>
+                <a href="guides/index.html">가이드</a>
+                <a href="about.html">소개</a>
+            </nav>
         </div>
     </header>
-
-    <main class="container">
-        <section style="margin: 4rem 0;">
-            <h2>전문 분야</h2>
-            <div class="grid">
-                <div class="card">
-                    <span class="card-tag">Productivity</span>
-                    <h3 class="card-title">생산성 시스템</h3>
-                    <p class="card-excerpt">몰입을 돕는 딥 워크 방법론과 시간 관리 시스템을 구축합니다.</p>
-                </div>
-                <div class="card">
-                    <span class="card-tag">Career</span>
-                    <h3 class="card-title">커리어 전략</h3>
-                    <p class="card-excerpt">변화하는 시장에서 나만의 독보적인 커리어 경로를 설계하는 조언을 공유합니다.</p>
-                </div>
-                <div class="card">
-                    <span class="card-tag">AI Tools</span>
-                    <h3 class="card-title">AI 활용법</h3>
-                    <p class="card-excerpt">ChatGPT, Claude 등 AI 도구를 실무에 즉시 적용하는 프롬프트 기술을 다룹니다.</p>
-                </div>
-                <div class="card">
-                    <span class="card-tag">Learning</span>
-                    <h3 class="card-title">지속 가능한 학습</h3>
-                    <p class="card-excerpt">배운 것을 잊지 않고 나의 자산으로 만드는 학습 알고리즘을 제안합니다.</p>
-                </div>
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>내 연봉의 실체, <br>1초 만에 확인하세요</h1>
+                <p>가장 정확한 간편 추정 모델로 실수령액과 세금을 확인해보세요.</p>
+                <form action="calculator.html" method="GET" style="max-width:500px; margin:0 auto; display:flex; gap:10px;">
+                    <input type="number" name="salary" class="input-field" placeholder="연봉 입력 (예: 40000000)" required>
+                    <button type="submit" class="btn-primary">계산하기</button>
+                </form>
             </div>
         </section>
-
-        <section style="margin: 4rem 0;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                <h2>최신 통찰력</h2>
-                <a href="blog/index.html">모든 글 보기 →</a>
-            </div>
-            <div class="grid">
-                <!-- Blog Preview Cards -->
-                <article class="card">
-                    <span class="card-tag">Productivity</span>
-                    <h3 class="card-title"><a href="blog/post-1.html">몰입의 기술: 딥 워크 시스템 구축하기</a></h3>
-                    <p class="card-excerpt">주의력을 분산시키는 요소들을 차단하고 하루 4시간의 고밀도 몰입을 만드는 구체적인 루틴...</p>
-                    <div class="card-meta">2026.02.23 · 5 min read</div>
-                </article>
-                <article class="card">
-                    <span class="card-tag">AI Tools</span>
-                    <h3 class="card-title"><a href="blog/post-2.html">실무 효율을 200% 높이는 프롬프트 엔지니어링</a></h3>
-                    <p class="card-excerpt">AI에게 명확한 페르소나를 부여하고 원하는 결과를 한 번에 얻어내는 3단계 프롬프트 구조...</p>
-                    <div class="card-meta">2026.02.22 · 6 min read</div>
-                </article>
-                <article class="card">
-                    <span class="card-tag">Career</span>
-                    <h3 class="card-title"><a href="blog/post-3.html">내향인을 위한 전략적 네트워킹 가이드</a></h3>
-                    <p class="card-excerpt">큰 모임이 부담스러운 당신을 위해, 온라인과 1:1 대화를 활용한 지속 가능한 관계 맺기...</p>
-                    <div class="card-meta">2026.02.21 · 4 min read</div>
-                </article>
-            </div>
-        </section>
-
-        <div class="ad-container">
+        <div class="container">
+            <div class="ad-placeholder">광고 영역 (상단)</div>
+            <section class="grid">
+                <div class="card">
+                    <span class="tag">인기 가이드</span>
+                    <h3>사회초년생 월급 관리 5단계</h3>
+                    <p>통장 쪼개기부터 비상금 마련까지 실전 가이드.</p>
+                    <a href="guides/guide-1.html">자세히 보기 →</a>
+                </div>
+                <div class="card">
+                    <span class="tag">커리어</span>
+                    <h3>연봉협상 성공 체크리스트</h3>
+                    <p>내 가치를 높이는 전략적인 협상 기술.</p>
+                    <a href="guides/guide-2.html">자세히 보기 →</a>
+                </div>
+                <div class="card">
+                    <span class="tag">세금</span>
+                    <h3>4대보험 완전 정복</h3>
+                    <p>내 월급에서 빠지는 돈의 정체를 밝힙니다.</p>
+                    <a href="guides/guide-3.html">자세히 보기 →</a>
+                </div>
+            </section>
             <div class="ad-placeholder">광고 영역 (하단)</div>
         </div>
     </main>
-
     <footer>
         <div class="container">
-            <div class="footer-inner">
-                <div>
-                    <h4 style="color:white">하루 인사이트</h4>
-                    <p style="font-size:0.9rem">실전 리서치 기반의 생산성 매거진</p>
-                </div>
-                <div>
-                    <h4 style="color:white">링크</h4>
-                    <ul style="list-style:none; font-size:0.9rem">
-                        <li><a href="blog/index.html">블로그</a></li>
-                        <li><a href="about.html">소개</a></li>
-                        <li><a href="contact.html">문의</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 style="color:white">법적 고지</h4>
-                    <ul style="list-style:none; font-size:0.9rem">
-                        <li><a href="privacy.html">개인정보 처리방침</a></li>
-                        <li><a href="terms.html">이용약관</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2026 하루 인사이트. All rights reserved.</p>
-                <p style="font-size:0.75rem; margin-top:0.5rem">본 사이트는 독창적인 콘텐츠를 지향하며 무단 불펌을 엄격히 금지합니다.</p>
-            </div>
+            <p>© 2025 월급 인사이트. <a href="privacy.html">Privacy</a> | <a href="terms.html">Terms</a></p>
         </div>
     </footer>
-    <script src="assets/js/main.js"></script>
 </body>
 </html>
