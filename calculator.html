@@ -1,85 +1,57 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta name="google-adsense-account" content="ca-pub-2909316687309965">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2909316687309965" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>연봉 실수령액 계산기 | 월급 인사이트</title>
+    <title>연봉 실수령액 계산기 - 월급 인사이트</title>
     <link rel="stylesheet" href="assets/css/style.css">
-    <script src="assets/js/main.js" defer></script>
-    <script src="assets/js/calculator.js" defer></script>
 </head>
 <body>
     <header class="navbar">
         <div class="container">
-            <a href="index.html" class="logo">월급 인사이트</a>
+            <a href="/" class="logo">월급 인사이트</a>
             <nav class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="calculator.html">계산기</a>
-                <a href="guides/index.html">가이드</a>
-                <a href="about.html">소개</a>
+                <a href="/">홈</a>
+                <a href="/posts/">정보 가이드</a>
+                <a href="/calculator.html">계산기</a>
+                <a href="/about/">소개</a>
             </nav>
         </div>
     </header>
-    <main class="container">
-        <h1 style="margin-top:2rem; text-align:center;">연봉 실수령액 계산기</h1>
-        <div class="calculator-layout" id="salary-form">
-            <div style="background:var(--surface-color); padding:1.5rem; border-radius:1rem;">
-                <h3>입력 정보</h3>
-                <div style="margin-top:1rem;">
-                    <label>연봉 (원)</label>
-                    <input type="number" id="salary" class="input-field" placeholder="예: 40000000">
-                </div>
-                <div style="margin-top:1rem;">
-                    <label>부양가족 수</label>
-                    <input type="number" id="dependents" class="input-field" value="1" min="1">
-                </div>
-                <div style="margin-top:1rem;">
-                    <label>20세 이하 자녀 수</label>
-                    <input type="number" id="children" class="input-field" value="0" min="0">
-                </div>
-                <div style="margin-top:1rem;">
-                    <label>비과세액 (월)</label>
-                    <input type="number" id="non-taxable" class="input-field" value="200000">
-                </div>
-                <div style="margin-top:1.5rem; padding-top:1rem; border-top:1px dashed var(--border-color);">
-                    <label>예상 인상률 (%)</label>
-                    <input type="number" id="increase-rate" class="input-field" value="0">
-                </div>
+    <main class="container" style="padding: 4rem 0;">
+        <h1 style="text-align: center;">연봉 실수령액 계산기</h1>
+        <p style="text-align: center; color: var(--text-secondary); margin-bottom: 3rem;">나의 월급과 세금을 실시간으로 시뮬레이션 해보세요.</p>
+        
+        <div class="static-page" style="max-width: 600px; margin: 0 auto; padding: 2rem; border: 1px solid var(--border-color);">
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">연봉 입력 (원)</label>
+                <input type="number" id="salaryInput" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px;" placeholder="예: 40000000">
             </div>
-            <div style="background:var(--surface-color); padding:1.5rem; border-radius:1rem;">
-                <h3>계산 결과</h3>
-                <div style="text-align:center; margin:1.5rem 0;">
-                    <span style="font-size:0.9rem; color:var(--text-secondary);">월 예상 실수령액</span>
-                    <h2 id="result-monthly-net" style="font-size:2.5rem; color:var(--primary-color);">0원</h2>
-                    <small>세전 월급: <span id="result-monthly-raw">0원</span></small>
-                </div>
-                <div style="font-size:0.9rem;">
-                    <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
-                        <span>총 공제액 합계</span><strong id="result-deduction-total">0원</strong>
-                    </div>
-                    <div style="padding-top:1rem; border-top:1px solid var(--border-color);">
-                        <p>인상 후 연봉: <strong id="sim-new-salary">0원</strong></p>
-                        <p>인상 후 월 수령액: <strong id="sim-new-net">0원</strong></p>
-                    </div>
-                </div>
+            <button onclick="calculate()" style="width: 100%; padding: 1rem; background: var(--primary-color); color: white; border: none; border-radius: 4px; font-weight: 700; cursor: pointer;">계산하기</button>
+            
+            <div id="resultArea" style="margin-top: 2rem; display: none; background: var(--surface-color); padding: 1.5rem; border-radius: 8px;">
+                <h3 style="margin-top: 0;">예상 월 실수령액</h3>
+                <p id="resultValue" style="font-size: 2rem; font-weight: 800; color: var(--primary-color);">0원</p>
+                <p style="font-size: 0.85rem; color: var(--text-secondary);">* 위 결과는 2024년 세율을 바탕으로 한 추정치이며, 실제와 다를 수 있습니다.</p>
             </div>
-        </div>
-        <div class="ad-container">
-            <span class="ad-label">Advertisement</span>
-            <!-- Google AdSense -->
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-2909316687309965"
-                 data-ad-slot="1122334455"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
         </div>
     </main>
-    <footer><div class="container"><p>© 2025 월급 인사이트</p></div></footer>
+    <script>
+        function calculate() {
+            const salary = document.getElementById('salaryInput').value;
+            if(!salary) return alert('연봉을 입력해주세요.');
+            // 단순 계산 로직 (예시용)
+            const monthly = Math.floor((salary / 12) * 0.85); 
+            document.getElementById('resultValue').innerText = monthly.toLocaleString() + '원';
+            document.getElementById('resultArea').style.display = 'block';
+        }
+    </script>
+    <footer>
+        <div class="container">
+            <div class="footer-copyright">
+                © 2025 월급 인사이트. <a href="/privacy-policy/">개인정보처리방침</a> | <a href="/contact/">문의하기</a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

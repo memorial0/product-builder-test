@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://salaryinsight.pages.dev/sitemap.xml
+
+Sitemap: https://yourdomain.com/sitemap.xml
