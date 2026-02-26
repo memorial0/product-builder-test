@@ -3,55 +3,340 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>연봉 실수령액 계산기 - 월급 인사이트</title>
+    <title>연봉/월급 실수령액 계산기 - 월급 인사이트</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Tailwind CSS for modern UI -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1a73e8',
+                        'primary-hover': '#174ea6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Tooltip style */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 220px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 10;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -110px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.75rem;
+            line-height: 1.4;
+            pointer-events: none;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        /* Custom number input hide arrows */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
 </head>
-<body>
-    <header class="navbar">
-        <div class="container">
-            <a href="/" class="logo">월급 인사이트</a>
-            <nav class="nav-links">
-                <a href="/">홈</a>
-                <a href="/posts/">정보 가이드</a>
-                <a href="/calculator.html">계산기</a>
-                <a href="/about/">소개</a>
+<body class="bg-gray-50 text-gray-900 font-sans">
+    <header class="navbar bg-white border-b border-gray-200">
+        <div class="container mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="/" class="logo text-primary font-extrabold text-2xl">월급 인사이트</a>
+            <nav class="hidden md:flex space-x-8">
+                <a href="/" class="text-gray-600 hover:text-primary font-medium">홈</a>
+                <a href="/posts/" class="text-gray-600 hover:text-primary font-medium">정보 가이드</a>
+                <a href="/calculator.html" class="text-primary font-bold">계산기</a>
+                <a href="/about/" class="text-gray-600 hover:text-primary font-medium">소개</a>
             </nav>
         </div>
     </header>
-    <main class="container" style="padding: 4rem 0;">
-        <h1 style="text-align: center;">연봉 실수령액 계산기</h1>
-        <p style="text-align: center; color: var(--text-secondary); margin-bottom: 3rem;">나의 월급과 세금을 실시간으로 시뮬레이션 해보세요.</p>
-        
-        <div class="static-page" style="max-width: 600px; margin: 0 auto; padding: 2rem; border: 1px solid var(--border-color);">
-            <div style="margin-bottom: 1.5rem;">
-                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">연봉 입력 (원)</label>
-                <input type="number" id="salaryInput" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px;" placeholder="예: 40000000">
+
+    <main class="container mx-auto px-4 py-12 max-w-4xl">
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-extrabold text-gray-900 mb-4">연봉/월급 실수령액 계산기</h1>
+            <p class="text-lg text-gray-600">가장 정확한 2024년 최신 요율 기반 급여 시뮬레이션</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Input Section -->
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                <h2 class="text-xl font-bold mb-6 flex items-center">
+                    <span class="w-2 h-6 bg-primary rounded-full mr-3"></span>
+                    급여 정보 입력
+                </h2>
+
+                <!-- Salary Type -->
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold text-gray-700 mb-3">급여 기준</label>
+                    <div class="flex p-1 bg-gray-100 rounded-lg">
+                        <label class="flex-1 text-center py-2 rounded-md cursor-pointer transition-all has-[:checked]:bg-white has-[:checked]:text-primary has-[:checked]:shadow-sm">
+                            <input type="radio" name="salaryType" value="annual" class="hidden" checked>
+                            <span class="font-bold">연봉</span>
+                        </label>
+                        <label class="flex-1 text-center py-2 rounded-md cursor-pointer transition-all has-[:checked]:bg-white has-[:checked]:text-primary has-[:checked]:shadow-sm">
+                            <input type="radio" name="salaryType" value="monthly" class="hidden">
+                            <span class="font-bold">월급</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Salary Amount -->
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">금액 (원)</label>
+                    <input type="number" id="salaryAmount" class="w-100% block w-full px-4 py-3 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-lg font-bold" value="40000000" placeholder="금액을 입력하세요">
+                </div>
+
+                <!-- Severance -->
+                <div id="severanceSection" class="mb-6">
+                    <label class="block text-sm font-semibold text-gray-700 mb-3">퇴직금</label>
+                    <div class="flex p-1 bg-gray-100 rounded-lg">
+                        <label class="flex-1 text-center py-2 rounded-md cursor-pointer transition-all has-[:checked]:bg-white has-[:checked]:text-primary has-[:checked]:shadow-sm">
+                            <input type="radio" name="includeSeverance" value="false" class="hidden" checked>
+                            <span class="font-bold">별도/미포함</span>
+                        </label>
+                        <label class="flex-1 text-center py-2 rounded-md cursor-pointer transition-all has-[:checked]:bg-white has-[:checked]:text-primary has-[:checked]:shadow-sm">
+                            <input type="radio" name="includeSeverance" value="true" class="hidden">
+                            <span class="font-bold">연봉 포함</span>
+                        </label>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-2">* 포함 시 연봉을 13으로 나누어 월급을 계산합니다.</p>
+                </div>
+
+                <div class="h-px bg-gray-100 my-8"></div>
+
+                <!-- Options -->
+                <div class="space-y-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <label class="text-sm font-semibold text-gray-700 flex items-center">
+                                부양가족 수 (본인 포함)
+                                <span class="tooltip ml-1">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <span class="tooltiptext">소득세 계산 시 공제 대상 가족 수로 활용됩니다.</span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                            <button onclick="changeVal('dependents', -1)" class="px-3 py-1 bg-gray-50 hover:bg-gray-100 text-xl">-</button>
+                            <input type="number" id="dependents" value="1" readonly class="w-12 text-center font-bold bg-white outline-none">
+                            <button onclick="changeVal('dependents', 1)" class="px-3 py-1 bg-gray-50 hover:bg-gray-100 text-xl">+</button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <label class="text-sm font-semibold text-gray-700 flex items-center">
+                                20세 이하 자녀 수
+                                <span class="tooltip ml-1">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <span class="tooltiptext">자녀세액공제 대상 인원입니다.</span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                            <button onclick="changeVal('children', -1)" class="px-3 py-1 bg-gray-50 hover:bg-gray-100 text-xl">-</button>
+                            <input type="number" id="children" value="0" readonly class="w-12 text-center font-bold bg-white outline-none">
+                            <button onclick="changeVal('children', 1)" class="px-3 py-1 bg-gray-50 hover:bg-gray-100 text-xl">+</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2 flex items-center">
+                            월 비과세액
+                            <span class="tooltip ml-1">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <span class="tooltiptext">식대 등 세금을 매기지 않는 급여입니다. (2024년 식대 비과세 한도 20만원)</span>
+                            </span>
+                        </label>
+                        <input type="number" id="nonTaxable" value="200000" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary transition-all font-medium">
+                    </div>
+                </div>
             </div>
-            <button onclick="calculate()" style="width: 100%; padding: 1rem; background: var(--primary-color); color: white; border: none; border-radius: 4px; font-weight: 700; cursor: pointer;">계산하기</button>
-            
-            <div id="resultArea" style="margin-top: 2rem; display: none; background: var(--surface-color); padding: 1.5rem; border-radius: 8px;">
-                <h3 style="margin-top: 0;">예상 월 실수령액</h3>
-                <p id="resultValue" style="font-size: 2rem; font-weight: 800; color: var(--primary-color);">0원</p>
-                <p style="font-size: 0.85rem; color: var(--text-secondary);">* 위 결과는 2024년 세율을 바탕으로 한 추정치이며, 실제와 다를 수 있습니다.</p>
+
+            <!-- Result Section -->
+            <div class="flex flex-col gap-6">
+                <!-- Summary Card -->
+                <div class="bg-primary text-white p-8 rounded-2xl shadow-lg shadow-primary/20">
+                    <h3 class="text-white/80 font-medium mb-1">월 예상 실수령액</h3>
+                    <div class="text-4xl font-black mb-6" id="res-net-monthly">0원</div>
+                    
+                    <div class="space-y-3 pt-4 border-t border-white/20">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-white/70">월급여 (세전)</span>
+                            <span id="res-cash-monthly" class="font-bold">0원</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-white/70">월 공제액 합계</span>
+                            <span id="res-total-deduction" class="font-bold">0원</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Breakdowns -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex-1">
+                    <h3 class="font-bold mb-6 flex items-center">공제 항목 상세</h3>
+                    <div class="space-y-5">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center text-gray-600 text-sm">
+                                국민연금
+                                <span class="tooltip ml-1">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <span class="tooltiptext">기준소득월액의 4.5% (2024년 기준 상한 277,650원)</span>
+                                </span>
+                            </div>
+                            <span id="res-pension" class="font-bold text-gray-900">0원</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center text-gray-600 text-sm">
+                                건강보험
+                                <span class="tooltip ml-1">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <span class="tooltiptext">보수월액의 3.545%</span>
+                                </span>
+                            </div>
+                            <span id="res-health" class="font-bold text-gray-900">0원</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center text-gray-600 text-sm">
+                                장기요양
+                                <span class="tooltip ml-1">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <span class="tooltiptext">건강보험료의 12.95%</span>
+                                </span>
+                            </div>
+                            <span id="res-longterm" class="font-bold text-gray-900">0원</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center text-gray-600 text-sm">
+                                고용보험
+                                <span class="tooltip ml-1">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <span class="tooltiptext">보수월액의 0.9%</span>
+                                </span>
+                            </div>
+                            <span id="res-employment" class="font-bold text-gray-900">0원</span>
+                        </div>
+                        <div class="h-px bg-gray-100 my-2"></div>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center text-gray-600 text-sm font-bold">
+                                소득세 (국세)
+                                <span class="tooltip ml-1 font-normal">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <span class="tooltiptext">간이세액표 기반 (부양가족/자녀수 반영)</span>
+                                </span>
+                            </div>
+                            <span id="res-income-tax" class="font-bold text-gray-900">0원</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center text-gray-600 text-sm">
+                                지방소득세 (지방세)
+                                <span class="tooltip ml-1">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <span class="tooltiptext">소득세의 10%</span>
+                                </span>
+                            </div>
+                            <span id="res-local-tax" class="font-bold text-gray-900">0원</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
-    <script>
-        function calculate() {
-            const salary = document.getElementById('salaryInput').value;
-            if(!salary) return alert('연봉을 입력해주세요.');
-            // 단순 계산 로직 (예시용)
-            const monthly = Math.floor((salary / 12) * 0.85); 
-            document.getElementById('resultValue').innerText = monthly.toLocaleString() + '원';
-            document.getElementById('resultArea').style.display = 'block';
-        }
-    </script>
-    <footer>
-        <div class="container">
-            <div class="footer-copyright">
-                © 2025 월급 인사이트. <a href="/privacy-policy/">개인정보처리방침</a> | <a href="/contact/">문의하기</a>
+
+    <footer class="bg-gray-100 border-t border-gray-200 pt-16 pb-8 mt-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center text-gray-500 text-sm">
+                © 2026 월급 인사이트. <a href="/privacy-policy/" class="hover:text-primary underline underline-offset-4">개인정보처리방침</a> | <a href="/contact/" class="hover:text-primary underline underline-offset-4">문의하기</a>
+                <p class="mt-4 text-gray-400">* 본 계산기는 2024년 기준 간이세액표를 활용한 추정치입니다.</p>
             </div>
         </div>
     </footer>
+
+    <script type="module">
+        import { calculatePayroll } from './assets/js/payroll/calculator.js';
+
+        // Global value changers (counters)
+        window.changeVal = (id, delta) => {
+            const input = document.getElementById(id);
+            let val = parseInt(input.value) + delta;
+            if (id === 'dependents' && val < 1) val = 1;
+            if (id === 'children' && val < 0) val = 0;
+            input.value = val;
+            update();
+        };
+
+        const salaryInput = document.getElementById('salaryAmount');
+        const salaryTypeRadios = document.getElementsByName('salaryType');
+        const includeSeveranceRadios = document.getElementsByName('includeSeverance');
+        const nonTaxableInput = document.getElementById('nonTaxable');
+        const severanceSection = document.getElementById('severanceSection');
+
+        function update() {
+            const type = Array.from(salaryTypeRadios).find(r => r.checked).value;
+            const salary = parseFloat(salaryInput.value) || 0;
+            const includeSeverance = Array.from(includeSeveranceRadios).find(r => r.checked).value === 'true';
+            const dependents = parseInt(document.getElementById('dependents').value) || 1;
+            const children = parseInt(document.getElementById('children').value) || 0;
+            const nonTaxable = parseFloat(nonTaxableInput.value) || 0;
+
+            // Show/hide severance section for monthly pay
+            severanceSection.style.display = type === 'annual' ? 'block' : 'none';
+
+            const result = calculatePayroll({
+                type,
+                salary,
+                includeSeverance,
+                dependents,
+                childrenUnder20: children,
+                nonTaxableMonthly: nonTaxable
+            });
+
+            render(result);
+        }
+
+        function render(res) {
+            const f = (n) => new Intl.NumberFormat('ko-KR').format(Math.round(n)) + '원';
+            
+            document.getElementById('res-net-monthly').textContent = f(res.netMonthly);
+            document.getElementById('res-cash-monthly').textContent = f(res.cashMonthly);
+            document.getElementById('res-total-deduction').textContent = f(res.totalDeduction);
+            
+            document.getElementById('res-pension').textContent = f(res.deductions.pension);
+            document.getElementById('res-health').textContent = f(res.deductions.health);
+            document.getElementById('res-longterm').textContent = f(res.deductions.longTermCare);
+            document.getElementById('res-employment').textContent = f(res.deductions.employment);
+            document.getElementById('res-income-tax').textContent = f(res.deductions.incomeTax);
+            document.getElementById('res-local-tax').textContent = f(res.deductions.localIncomeTax);
+
+            // Log breakdown for developers
+            console.log('Payroll Breakdown:', res);
+        }
+
+        // Event listeners
+        [salaryInput, nonTaxableInput].forEach(el => el.addEventListener('input', update));
+        [...salaryTypeRadios, ...includeSeveranceRadios].forEach(el => el.addEventListener('change', update));
+
+        // Initial update
+        update();
+    </script>
 </body>
 </html>
